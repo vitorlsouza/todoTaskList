@@ -38,3 +38,9 @@ export const ButtonTodo = styled.button`
     cursor: pointer;
   }
 `;
+
+export const Section = styled.div`
+  display: flex;
+  flex-direction: row;
+  width: 60vw;
+`;

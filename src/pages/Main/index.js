@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import api from '../../services/api';
+import Modal from 'react-responsive-modal';
+import ModalPaper from '../../components/ModalPaper';
 
 import { Container, FormTodo, InputTodo, ButtonTodo, Section } from './styles';
 
@@ -11,6 +13,9 @@ class Main extends Component {
     todos: [],
     inputText: '',
     checkeds: [],
+    editId: null,
+    open: false,
+    done: null,
   };
 
   componentDidMount() {
@@ -75,8 +80,38 @@ class Main extends Component {
     });
   };
 
+  handleEditTodo = e => {
+    const idTodo = +e.target.id;
+
+    const editTodo = this.state.todos.filter(todo => todo.id === idTodo).map(t => t.description);
+
+    this.setState({ inputText: editTodo, editId: idTodo, done: false }, () => {
+      this.onOpenModal();
+    });
+  };
+
+  onOpenModal = () => {
+    this.setState({ open: true });
+  };
+
+  onCloseModal = () => {
+    this.setState({ open: false });
+  };
+
+  handleSaveTodo = () => {
+    const { editId, inputText, done } = this.state;
+    const task = {
+      id: editId,
+      description: inputText,
+      done,
+    };
+    this.handleUpdateTodo(task);
+    this.onCloseModal();
+    this.setState({ inputText: '' });
+  };
+
   render() {
-    const { section, todos, inputText } = this.state;
+    const { section, todos, inputText, open, editId } = this.state;
     console.log(todos);
     return (
       <Container>
@@ -98,9 +133,17 @@ class Main extends Component {
               toggleCheck={this.handleToggleCheck}
               deleteTodo={this.handleDeleteTodo}
               deleteAllDone={this.handleDeleteCheckedTodos}
+              editTodo={this.handleEditTodo}
             />
           ))}
         </Section>
+        <Modal open={open} onClose={this.onCloseModal} center>
+          <ModalPaper
+            description={inputText}
+            changeInput={this.handleChangeInput}
+            saveTodo={this.handleSaveTodo}
+          />
+        </Modal>
       </Container>
     );
   }

@@ -6,7 +6,9 @@ import {
 
 class Todo extends Component {
   render() {
-    const { todo, toggleCheck, deleteTodo } = this.props;
+    const {
+      todo, toggleCheck, deleteTodo, editTodo,
+    } = this.props;
     return (
       <Container>
         <TodoDiv>
@@ -17,7 +19,9 @@ class Todo extends Component {
             checked={todo.done}
           />
           <TodoText done={todo.done}>{todo.description}</TodoText>
-          <TodoEdit id={todo.id}>edit</TodoEdit>
+          <TodoEdit id={todo.id} onClick={e => editTodo(e)}>
+            edit
+          </TodoEdit>
           <TodoDelete onClick={e => deleteTodo(e)} name={todo.id}>
             delete
           </TodoDelete>

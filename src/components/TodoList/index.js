@@ -9,7 +9,7 @@ import Todo from '../Todo';
 class TodoList extends Component {
   render() {
     const {
-      section, todos, toggleCheck, deleteTodo, deleteAllDone,
+      section, todos, toggleCheck, deleteTodo, deleteAllDone, editTodo,
     } = this.props;
     const actualSection = section !== 'Undone';
     return (
@@ -24,7 +24,13 @@ class TodoList extends Component {
           {todos
             .filter(t => t.done === actualSection)
             .map(todo => (
-              <Todo key={todo.id} todo={todo} toggleCheck={toggleCheck} deleteTodo={deleteTodo} />
+              <Todo
+                key={todo.id}
+                todo={todo}
+                toggleCheck={toggleCheck}
+                deleteTodo={deleteTodo}
+                editTodo={editTodo}
+              />
             ))}
         </Todos>
       </Container>

@@ -6,7 +6,7 @@ import Todo from '../Todo';
 
 class TodoList extends Component {
   render() {
-    const { section, todos } = this.props;
+    const { section, todos, toggleCheck } = this.props;
     const actualSection = section !== 'Undone';
     return (
       <Container>
@@ -15,7 +15,7 @@ class TodoList extends Component {
           {todos
             .filter(t => t.done === actualSection)
             .map(todo => (
-              <Todo key={todo.id} todo={todo} />
+              <Todo key={todo.id} todo={todo} toggleCheck={toggleCheck} />
             ))}
         </Todos>
       </Container>

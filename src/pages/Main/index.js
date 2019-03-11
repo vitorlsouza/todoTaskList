@@ -38,6 +38,15 @@ class Main extends Component {
     api.post('challenge.post-task', task).then(res => this.updateTask());
   };
 
+  handleToggleCheck = e => {
+    const todoId = +e.target.name;
+    this.setState({
+      todos: this.state.todos.map(todo =>
+        todo.id === todoId ? { ...todo, done: !todo.done } : todo,
+      ),
+    });
+  };
+
   render() {
     const { section, todos } = this.state;
     console.log(todos);
@@ -49,7 +58,7 @@ class Main extends Component {
         </FormTodo>
         <Section>
           {section.map(s => (
-            <TodoList key={s} section={s} todos={todos} />
+            <TodoList key={s} section={s} todos={todos} toggleCheck={this.handleToggleCheck} />
           ))}
         </Section>
       </Container>

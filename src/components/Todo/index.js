@@ -6,12 +6,17 @@ import {
 
 class Todo extends Component {
   render() {
-    const { todo } = this.props;
+    const { todo, toggleCheck } = this.props;
     return (
       <Container>
         <TodoDiv>
-          <TodoCheck type="checkbox" />
-          <TodoText>{todo.description}</TodoText>
+          <TodoCheck
+            type="checkbox"
+            onChange={e => toggleCheck(e)}
+            name={todo.id}
+            checked={todo.done}
+          />
+          <TodoText done={todo.done}>{todo.description}</TodoText>
           <TodoEdit>edit</TodoEdit>
           <TodoDelete>delete</TodoDelete>
         </TodoDiv>

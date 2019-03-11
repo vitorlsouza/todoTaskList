@@ -25,6 +25,11 @@ export const TodoText = styled.p`
   flex: 1;
   font-size: 18px;
   margin-right: 10px;
+
+  ${({ done }) => done
+    && `
+    text-decoration: line-through;
+  `}
 `;
 
 export const TodoEdit = styled.button`

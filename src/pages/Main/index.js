@@ -13,10 +13,10 @@ class Main extends Component {
   };
 
   componentDidMount() {
-    this.updateTask();
+    this.updateAllTask();
   }
 
-  updateTask = () => {
+  updateAllTask = () => {
     api.post('challenge.get-task').then(res => this.setState({ todos: res.data }));
   };
 
@@ -35,16 +35,31 @@ class Main extends Component {
       done: false,
     };
 
-    api.post('challenge.post-task', task).then(res => this.updateTask());
+    api.post('challenge.post-task', task).then(res => this.updateAllTask());
   };
 
   handleToggleCheck = e => {
     const todoId = +e.target.name;
-    this.setState({
-      todos: this.state.todos.map(todo =>
-        todo.id === todoId ? { ...todo, done: !todo.done } : todo,
-      ),
+    // this.setState(
+    //   {
+    //     todos: this.state.todos.map(todo =>
+    //       todo.id === todoId ? { ...todo, done: !todo.done } : todo,
+    //     ),
+    //   }
+    // );
+    this.state.todos.map(todo => {
+      if (todo.id === todoId) {
+        const task = {
+          ...todo,
+          done: !todo.done,
+        };
+        this.handleUpdateTask(task);
+      }
     });
+  };
+
+  handleUpdateTask = task => {
+    api.post('challenge.put-task', task).then(res => this.updateAllTask());
   };
 
   render() {

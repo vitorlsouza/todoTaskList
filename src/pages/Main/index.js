@@ -9,29 +9,47 @@ class Main extends Component {
   state = {
     section: ['Undone', 'Done'],
     todos: [],
+    inputText: '',
   };
 
   componentDidMount() {
-    const config = {
-      headers: {
-        'challenge-token': 'df27bfc9e8bf54054bd575d2ae9e7e9a',
-      },
-    };
-    api.post('challenge.get-task', {}, config).then(res => this.setState({ todos: res.data }));
+    this.updateTask();
   }
+
+  updateTask = () => {
+    api.post('challenge.get-task').then(res => this.setState({ todos: res.data }));
+  };
+
+  handleChangeInput = e => {
+    const todoText = e.target.value;
+
+    this.setState({ inputText: todoText });
+  };
+
+  handleAddTodo = e => {
+    e.preventDefault();
+    const { inputText } = this.state;
+
+    const task = {
+      description: inputText,
+      done: false,
+    };
+
+    api.post('challenge.post-task', task).then(res => this.updateTask());
+  };
 
   render() {
     const { section, todos } = this.state;
     console.log(todos);
     return (
       <Container>
-        <FormTodo onSubmit={() => {}}>
-          <InputTodo type="text" placeholder="Inserir tarefa" />
+        <FormTodo onSubmit={this.handleAddTodo}>
+          <InputTodo type="text" placeholder="Inserir tarefa" onChange={this.handleChangeInput} />
           <ButtonTodo type="submit">Add Todo</ButtonTodo>
         </FormTodo>
         <Section>
           {section.map(s => (
-            <TodoList section={s} todos={todos} />
+            <TodoList key={s} section={s} todos={todos} />
           ))}
         </Section>
       </Container>

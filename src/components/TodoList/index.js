@@ -15,7 +15,7 @@ class TodoList extends Component {
           {todos
             .filter(t => t.done === actualSection)
             .map(todo => (
-              <Todo todo={todo} />
+              <Todo key={todo.id} todo={todo} />
             ))}
         </Todos>
       </Container>

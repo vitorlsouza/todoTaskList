@@ -31,12 +31,3 @@ export const TodoText = styled.p`
     text-decoration: line-through;
   `}
 `;
-
-export const TodoEdit = styled.button`
-  margin-right: 5px;
-  border: none;
-`;
-
-export const TodoDelete = styled.button`
-  border: none;
-`;

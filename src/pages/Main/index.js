@@ -41,12 +41,10 @@ class Main extends Component {
       done: false,
     };
 
-    api.post('challenge.post-task', task).then(
-      res => this.updateAllTodo(),
-      () => {
-        this.setState({ inputText: '' });
-      },
-    );
+    api.post('challenge.post-task', task).then(res => {
+      this.updateAllTodo();
+      this.setState({ inputText: '' });
+    });
   };
 
   handleToggleCheck = e => {

@@ -5,7 +5,7 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import IconButton from '@material-ui/core/IconButton';
 
 import {
-  Container, TodoDiv, TodoCheck, TodoText, TodoEdit, TodoDelete,
+  Container, TodoDiv, TodoCheck, TodoText,
 } from './styles';
 
 class Todo extends Component {
@@ -13,7 +13,6 @@ class Todo extends Component {
     const {
       todo, toggleCheck, deleteTodo, editTodo, section,
     } = this.props;
-    console.log(todo);
     return (
       <Container>
         <TodoDiv>

@@ -30,6 +30,7 @@ class TodoList extends Component {
                 toggleCheck={toggleCheck}
                 deleteTodo={deleteTodo}
                 editTodo={editTodo}
+                section={section}
               />
             ))}
         </Todos>

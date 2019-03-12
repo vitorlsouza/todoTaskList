@@ -34,6 +34,9 @@ export const TodoText = styled.p`
 
 export const TodoEdit = styled.button`
   margin-right: 5px;
+  border: none;
 `;
 
-export const TodoDelete = styled.button``;
+export const TodoDelete = styled.button`
+  border: none;
+`;

@@ -68,7 +68,7 @@ class Main extends Component {
   };
 
   handleDeleteTodo = e => {
-    const idTodo = +e.target.name;
+    const idTodo = +e.currentTarget.name;
     const ids = { ids: [idTodo] };
     api.post('challenge.delete-task', ids).then(res => this.updateAllTodo());
   };
@@ -81,12 +81,12 @@ class Main extends Component {
   };
 
   handleEditTodo = e => {
-    const idTodo = +e.target.id;
+    const idTodo = +e.currentTarget.id;
 
-    const editTodo = this.state.todos.filter(todo => todo.id === idTodo).map(t => t.description);
-
-    this.setState({ inputText: editTodo, editId: idTodo, done: false }, () => {
-      this.onOpenModal();
+    api.post('challenge.get-task', { id: idTodo }).then(({ data }) => {
+      this.setState({ editId: data.id, inputText: data.description, done: data.done }, () => {
+        this.onOpenModal();
+      });
     });
   };
 
@@ -96,6 +96,7 @@ class Main extends Component {
 
   onCloseModal = () => {
     this.setState({ open: false });
+    this.setState({ inputText: '' });
   };
 
   handleSaveTodo = () => {
@@ -106,12 +107,13 @@ class Main extends Component {
       done,
     };
     this.handleUpdateTodo(task);
+    this.updateAllTodo();
     this.onCloseModal();
     this.setState({ inputText: '' });
   };
 
   render() {
-    const { section, todos, inputText, open, editId } = this.state;
+    const { section, todos, inputText, open } = this.state;
     console.log(todos);
     return (
       <Container>

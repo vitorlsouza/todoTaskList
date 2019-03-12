@@ -1,4 +1,8 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
+
+import EditIcon from '@material-ui/icons/Edit';
+import DeleteIcon from '@material-ui/icons/Delete';
+import IconButton from '@material-ui/core/IconButton';
 
 import {
   Container, TodoDiv, TodoCheck, TodoText, TodoEdit, TodoDelete,
@@ -7,8 +11,9 @@ import {
 class Todo extends Component {
   render() {
     const {
-      todo, toggleCheck, deleteTodo, editTodo,
+      todo, toggleCheck, deleteTodo, editTodo, section,
     } = this.props;
+    console.log(todo);
     return (
       <Container>
         <TodoDiv>
@@ -19,12 +24,16 @@ class Todo extends Component {
             checked={todo.done}
           />
           <TodoText done={todo.done}>{todo.description}</TodoText>
-          <TodoEdit id={todo.id} onClick={e => editTodo(e)}>
-            edit
-          </TodoEdit>
-          <TodoDelete onClick={e => deleteTodo(e)} name={todo.id}>
-            delete
-          </TodoDelete>
+          {section === 'Undone' && (
+            <Fragment>
+              <IconButton id={todo.id} onClick={e => editTodo(e)} style={{ padding: 6 }}>
+                <EditIcon fontSize="small" />
+              </IconButton>
+              <IconButton onClick={e => deleteTodo(e)} name={todo.id} style={{ padding: 6 }}>
+                <DeleteIcon fontSize="small" />
+              </IconButton>
+            </Fragment>
+          )}
         </TodoDiv>
       </Container>
     );

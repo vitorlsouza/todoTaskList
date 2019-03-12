@@ -112,7 +112,6 @@ class Main extends Component {
 
   render() {
     const { section, todos, inputText, open } = this.state;
-    console.log(todos);
     return (
       <Container>
         <FormTodo onSubmit={this.handleAddTodo}>
